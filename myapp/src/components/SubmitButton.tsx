@@ -17,27 +17,21 @@ const styles = StyleSheet.create({
 
 interface Props {
   input: string;
-  setInput: (count: string) => void;
   answer: number;
-  setMistake: (mistake: boolean) => void;
-  counter: number;
-  setCounter: (counter: number) => void
+  setMistake: (nextFlg: boolean) => void
+  setNextFlg: (nextFlg: boolean) => void
 }
 
 export default function SubmitButton(props: Props){
-  const{input, setInput, answer, setMistake, counter, setCounter} = props;
+  const{input, answer, setMistake, setNextFlg} = props;
 
   const onPress=React.useCallback(() => {
     if(parseInt(input) === answer){
-      setCounter(counter + 1);
-      setInput('');
+      setNextFlg(true)
     }else{
-      console.log('ng')
-      console.log({input})
-      console.log({answer})
       setMistake(true)
     }}
-    ,[input, answer, setMistake])
+    ,[input, answer, setNextFlg, setMistake])
 
   return(
     <TouchableOpacity style={styles.button}

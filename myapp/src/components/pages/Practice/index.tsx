@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet, TextInput, View, Text, Button,
 } from 'react-native';
@@ -80,9 +80,22 @@ export default function App(){
   const [right, setRight] = React.useState(1);
   const [mistake, setMistake] = React.useState(false);
   const [counter, setCounter] = React.useState(0);
+  const [input, setInput] = React.useState('');
+  const [nextFlg, setNextFlg] = React.useState(true);
+
+  useEffect(() => {
+    // function makeQuestion(){
+      if(nextFlg){
+        setLeft(Math.floor( Math.random() * 90 ));
+        setRight(Math.floor( Math.random() * 90 ));
+        setNextFlg(false)
+        setCounter(counter + 1)
+        setInput('')
+      }
+    // }
+  })
 
   const answer = left * right;
-  const [input, setInput] = React.useState('');
 
   return(
     <View style={styles.container}>
@@ -113,11 +126,9 @@ export default function App(){
           {/* <Button title='✓' onPress={() => submit(parseInt(input), answer, mistake) }></Button> */}
           <SubmitButton
             input={input}
-            setInput={setInput}
             answer={answer}
             setMistake={setMistake}
-            counter={counter}
-            setCounter={setCounter}
+            setNextFlg={setNextFlg}
           />
         </View>
       </View> 

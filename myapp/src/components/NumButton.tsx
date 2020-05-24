@@ -28,8 +28,8 @@ export default function NumButton(props: Props){
 
   const onPress=React.useCallback(() => {
     if(mistake===true){
-      setInput('')
       setMistake(false)
+      setInput('')
     }
     setInput(input + buttonLabel )}
     ,[input, setInput])
