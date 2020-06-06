@@ -20,6 +20,9 @@ export default function ModeSelect(){
       <TouchableOpacity onPress={() => navigate(PRACTICE)}>
         <Text>Go to Practice</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigate(RESULT)}>
+        <Text>Go to Result</Text>
+      </TouchableOpacity>
     </View>
   )
 }

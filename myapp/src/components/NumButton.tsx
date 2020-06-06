@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet} from 'react-native';
+import { Button } from 'react-native-paper';
 
 const styles = StyleSheet.create({
   button: {
@@ -39,5 +40,7 @@ export default function NumButton(props: Props){
     onPress={onPress}>
       <Text style={styles.buttonText}>{buttonLabel}</Text>
     </TouchableOpacity>
+    // <Button mode="contained" 
+    // onPress={onPress}>{buttonLabel}</Button> //useNativeDriver: trueにする方法が分からない
   )
 }

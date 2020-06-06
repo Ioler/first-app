@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import {
-  StyleSheet, TextInput, View, Text, Button,
+  StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import NumButton from '../../NumButton';
 import SubmitButton from '../../SubmitButton';
 import ClearButton from '../../ClearButton';
 import Question from '../../Question';
+import { useNavigation } from '@react-navigation/native';
+import { MODE_SELECT, PRACTICE, RESULT } from '../../../constants/path';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,6 +53,8 @@ export default function App(){
   const [counter, setCounter] = React.useState(0);
   const [input, setInput] = React.useState('');
   const [nextFlg, setNextFlg] = React.useState(true);
+  
+  const { navigate } = useNavigation();
 
   useEffect(() => {
     if(nextFlg){
@@ -61,6 +65,13 @@ export default function App(){
       setInput('')
     }
   })
+
+  // 3問正解でリザルトへ移動
+  useEffect(() => {
+    if(counter===2){
+			navigate(RESULT);
+    }
+	})
 
   const answer = left * right;
 
@@ -96,6 +107,9 @@ export default function App(){
           />
         </View>
       </View> 
+      <TouchableOpacity onPress={() => navigate(RESULT)}>
+        <Text>Go to Result</Text>
+      </TouchableOpacity>
     </View>
   )
 }
