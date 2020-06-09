@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet} from 'react-native';
+import Answer from '../class/Answer';
 
 const styles = StyleSheet.create({
   button: {
@@ -17,19 +18,17 @@ const styles = StyleSheet.create({
 
 
 interface Props {
-  setInput: (count: string) => void;
-  setMistake: (count: boolean) => void;
+  answer: Answer;
 }
 
 export default function ClearButton(props: Props){
-  const{setInput, setMistake} = props;
+  const{answer} = props;
 
   const onPress=React.useCallback(() => {
-    setInput('');
-    setMistake(false);
-  }
-    ,[setInput, setMistake])
-
+    answer.setInput('');
+    answer.setMistake(false);
+  },[]);
+  
   return(
     <TouchableOpacity style={styles.button}
     onPress={onPress}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet} from 'react-native';
+import Question from '../class/Question'
 
 const styles = StyleSheet.create({
   question: {
@@ -14,16 +15,15 @@ const styles = StyleSheet.create({
 });
 
 interface Props{
-  left: number;
-  right: number;
+  question: Question;
 }
 
-export default function Question(props: Props){
-  const {left, right} = props;
+export default function QuestionArea(props: Props){
+  const {question} = props;
 
   return(
     <View style={styles.question}>
-      <Text style={styles.questionText}>{left} x {right}=</Text>
+      <Text style={styles.questionText}>{question.getLeft()} x {question.getRight()}=</Text>
     </View>
   )
 }

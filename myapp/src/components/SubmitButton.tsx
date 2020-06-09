@@ -1,5 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet} from 'react-native';
+import Answer from '../class/Answer';
+import Question from '../class/Question'
+import Status from '../class/Status'
 
 const styles = StyleSheet.create({
   button: {
@@ -16,22 +19,21 @@ const styles = StyleSheet.create({
 })
 
 interface Props {
-  input: string;
-  answer: number;
-  setMistake: (nextFlg: boolean) => void
-  setNextFlg: (nextFlg: boolean) => void
+  question: Question;
+  answer: Answer;
+  status: Status;
 }
 
 export default function SubmitButton(props: Props){
-  const{input, answer, setMistake, setNextFlg} = props;
+  const{question, answer, status} = props;
 
   const onPress=React.useCallback(() => {
-    if(parseInt(input) === answer){
-      setNextFlg(true)
+    if(parseInt(answer.getInput()) === question.answer){
+      status.setNextFlg(true)
     }else{
-      setMistake(true)
+      answer.setMistake(true)
     }}
-    ,[input, answer, setNextFlg, setMistake])
+    ,[])
 
   return(
     <TouchableOpacity style={styles.button}

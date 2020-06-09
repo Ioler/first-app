@@ -5,9 +5,12 @@ import {
 import NumButton from '../../NumButton';
 import SubmitButton from '../../SubmitButton';
 import ClearButton from '../../ClearButton';
-import Question from '../../Question';
+import QuestionArea from '../../QuestionArea';
 import { useNavigation } from '@react-navigation/native';
 import { MODE_SELECT, PRACTICE, RESULT } from '../../../constants/path';
+import Answer from '../../../class/Answer';
+import Question from '../../../class/Question'
+import Status from '../../../class/Status'
 
 const styles = StyleSheet.create({
   container: {
@@ -47,24 +50,23 @@ const styles = StyleSheet.create({
 
 
 export default function App(){
-  const [left, setLeft] = React.useState(1);
-  const [right, setRight] = React.useState(1);
-  const [mistake, setMistake] = React.useState(false);
   const [counter, setCounter] = React.useState(0);
-  const [input, setInput] = React.useState('');
-  const [nextFlg, setNextFlg] = React.useState(true);
+  let question: Question;
+
+  const answer = new Answer();
+  question = new Question();
+  const status = new Status();
   
   const { navigate } = useNavigation();
 
-  useEffect(() => {
-    if(nextFlg){
-      setLeft(Math.floor( Math.random() * 90 + 10));
-      setRight(Math.floor( Math.random() * 90 + 10));
-      setNextFlg(false)
-      setCounter(counter + 1)
-      setInput('')
-    }
-  })
+  // useEffect(() => {
+  //   if(status.getNextFlg){
+  //     question = new Question();
+  //     status.setNextFlg(false)
+  //     setCounter(counter + 1)
+  //     answer.setInput('')
+  //   }
+  // })
 
   // 3問正解でリザルトへ移動
   useEffect(() => {
@@ -73,37 +75,36 @@ export default function App(){
     }
 	})
 
-  const answer = left * right;
+  // const answer = left * right;
 
   return(
     <View style={styles.container}>
       <Text style={styles.count}>{counter}問目</Text>
-      <Question left={left} right={right} />
-      <Text style={[mistake && styles.mistakeInput]}>{input}</Text>
+      <QuestionArea question={question} />
+      <Text style={[answer.getMistake() && styles.mistakeInput]}>{answer.getInput()}</Text>
       <View style={styles.keyboard}>
         <View style={styles.keyboardsub}>
-          <NumButton buttonLabel={1} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
-          <NumButton buttonLabel={2} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
-          <NumButton buttonLabel={3} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
+          <NumButton buttonLabel={1} answer={answer} />
+          <NumButton buttonLabel={2} answer={answer} />
+          <NumButton buttonLabel={3} answer={answer} />
         </View>
         <View style={styles.keyboardsub}>
-          <NumButton buttonLabel={4} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
-          <NumButton buttonLabel={5} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
-          <NumButton buttonLabel={6} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
+          <NumButton buttonLabel={4} answer={answer} />
+          <NumButton buttonLabel={5} answer={answer} />
+          <NumButton buttonLabel={6} answer={answer} />
         </View>
         <View style={styles.keyboardsub}>
-          <NumButton buttonLabel={7} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
-          <NumButton buttonLabel={8} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
-          <NumButton buttonLabel={9} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
+          <NumButton buttonLabel={7} answer={answer} />
+          <NumButton buttonLabel={8} answer={answer} />
+          <NumButton buttonLabel={9} answer={answer} />
         </View>
         <View style={styles.keyboardsub}>
-          <ClearButton setInput={setInput} setMistake={setMistake} />
-          <NumButton buttonLabel={0} input={input} setInput={setInput} mistake={mistake} setMistake={setMistake} />
+          <ClearButton answer={answer} />
+          <NumButton buttonLabel={0} answer={answer} />
           <SubmitButton
-            input={input}
+            question={question}
             answer={answer}
-            setMistake={setMistake}
-            setNextFlg={setNextFlg}
+            status={status}
           />
         </View>
       </View> 

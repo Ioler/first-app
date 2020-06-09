@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet} from 'react-native';
 import { Button } from 'react-native-paper';
+import Answer from '../class/Answer';
 
 const styles = StyleSheet.create({
   button: {
@@ -18,22 +19,19 @@ const styles = StyleSheet.create({
 
 interface Props {
   buttonLabel: number;
-  input: string;
-  setInput: (count: string) => void;
-  mistake: boolean;
-  setMistake: (count: boolean) => void;
+  answer: Answer;
 }
 
 export default function NumButton(props: Props){
-  const{buttonLabel, input, setInput, mistake, setMistake} = props;
+  const{buttonLabel, answer} = props;
 
   const onPress=React.useCallback(() => {
-    if(mistake===true){
-      setMistake(false)
-      setInput('')
+    if(answer.getMistake()===true){
+      answer.setMistake(false);
+      answer.setInput('');
     }
-    setInput(input + buttonLabel )}
-    ,[input, setInput])
+    answer.setInput(answer.getInput() + buttonLabel )}
+    ,[])
 
   return(
     <TouchableOpacity style={styles.button}
