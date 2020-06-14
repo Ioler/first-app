@@ -26,11 +26,12 @@ export default function NumButton(props: Props){
   const{buttonLabel, answer} = props;
 
   const onPress=React.useCallback(() => {
-    if(answer.getMistake()===true){
+    console.log(answer.input)
+    if(answer.mistake===true){
       answer.setMistake(false);
       answer.setInput('');
     }
-    answer.setInput(answer.getInput() + buttonLabel )}
+    answer.setInput(answer.input + buttonLabel )}
     ,[])
 
   return(

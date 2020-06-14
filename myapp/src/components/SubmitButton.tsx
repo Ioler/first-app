@@ -28,8 +28,9 @@ export default function SubmitButton(props: Props){
   const{question, answer, status} = props;
 
   const onPress=React.useCallback(() => {
-    if(parseInt(answer.getInput()) === question.answer){
+    if(parseInt(answer.input) === question.answer){
       status.setNextFlg(true)
+      status.setEndDate(new Date().getTime())
     }else{
       answer.setMistake(true)
     }}

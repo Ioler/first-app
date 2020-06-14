@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
@@ -11,6 +11,7 @@ import { MODE_SELECT, PRACTICE, RESULT } from '../../../constants/path';
 import Answer from '../../../class/Answer';
 import Question from '../../../class/Question'
 import Status from '../../../class/Status'
+import AnswerArea from '../../AnswerArea'
 
 const styles = StyleSheet.create({
   container: {
@@ -50,38 +51,61 @@ const styles = StyleSheet.create({
 
 
 export default function App(){
-  const [counter, setCounter] = React.useState(0);
-  let question: Question;
-
-  const answer = new Answer();
-  question = new Question();
-  const status = new Status();
   
   const { navigate } = useNavigation();
 
+  const [counter, setCounter] = React.useState(0);
+  let question: Question = new Question();
+
+  const [input, setInput] = React.useState('');
+  const [mistake, setMistake] = React.useState(false);
+  let answer: Answer = new Answer(input, setInput, mistake, setMistake)
+
+  let status: Status = new Status();
+  // let answer: Answer = new Answer();
+  // let status: Status;
+  // let answer: Answer;
+
   // useEffect(() => {
-  //   if(status.getNextFlg){
-  //     question = new Question();
-  //     status.setNextFlg(false)
-  //     setCounter(counter + 1)
-  //     answer.setInput('')
-  //   }
+  //   status = new Status();
+  //   answer = new Answer();
   // })
+
+  useEffect(() => {
+    if(status.getNextFlg()){
+      question = new Question();
+      status.setNextFlg(false)
+      setCounter(counter + 1)
+      answer.setInput('')
+    }
+  })
 
   // 3問正解でリザルトへ移動
   useEffect(() => {
     if(counter===2){
 			navigate(RESULT);
     }
-	})
+  })
+  
+  useEffect(() => {
+    console.log('practice: ' + answer.input);
+  }
+  )
 
-  // const answer = left * right;
+  const onPress=React.useCallback(() => {
+    console.log(answer.input)},[])
 
   return(
     <View style={styles.container}>
       <Text style={styles.count}>{counter}問目</Text>
+     <TouchableOpacity style={styles.button}
+      onPress={onPress}>
+        <Text>Debug</Text>
+      </TouchableOpacity>
       <QuestionArea question={question} />
-      <Text style={[answer.getMistake() && styles.mistakeInput]}>{answer.getInput()}</Text>
+      {/* <Text style={[answer.getMistake() && styles.mistakeInput]} key={answer.getInput()}>{answer.getInput()}</Text> */}
+      { answer && <Text style={[answer.mistake && styles.mistakeInput]}>{answer.input}</Text>}
+      {/* <AnswerArea answer={answer} key={answer.input} /> */}
       <View style={styles.keyboard}>
         <View style={styles.keyboardsub}>
           <NumButton buttonLabel={1} answer={answer} />
